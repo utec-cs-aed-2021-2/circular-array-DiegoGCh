@@ -26,6 +26,7 @@ class CircularArray
         bool is_full();
         bool is_empty();
         int size();
+        void resize();
         void clear();
         T &operator[](int);
         void heapify(int* arr, int size, int i); //para el heapsort
@@ -34,7 +35,6 @@ class CircularArray
         void reverse();
         string to_string(string sep=" ");
 
-        
 
     private:
         int next(int);
@@ -158,42 +158,70 @@ T CircularArray<T>::pop_back(){
     }
   } else {
     cout << endl << "Is empty." << endl;
-    return 0; //que retorna si es empty?
+    return 0; //que retorna si es empty??
   }
+}
+
+template <class T>
+void CircularArray<T>::resize(){
+  int *temp = new T[this->capacity * 2];
+
+  for (int i = 0; i < this->capacity; i++){
+    temp[i] = this->array[(i+1) % this->capacity];
+  } 
+  
+  delete[] this->array;
+  this->array = temp;
+
+  this->back = this->capacity - 1;
+  this->front = 0;
+  this->capacity = this->capacity * 2;
 }
 
 template <class T>
 void CircularArray<T>::push_front(T data){
-  if (is_full() == false){
-    if (is_empty() == false){
-      this->front = prev(this->front);
-    } else {
-      this->front = this->back = 0;
-    }
-      this->array[this->front] = data;
-  } else{
-    cout << endl << "Is full." << endl;
+  if (is_full()){
+    resize();
   }
-}
+  if (is_empty() == false){
+    this->front = prev(this->front);
+  } else {
+    this->front = this->back = 0;
+  }
+    this->array[this->front] = data;
+ }
 
 template <class T>
 void CircularArray<T>::push_back(T data){
-  if (is_full() == false){
-      if (is_empty() == false){
-          this->back = next(this->back);
-      } else {
-          this->front = this->back = 0;
-      }
-      this->array[this->back] = data;
-  } else {
-      cout << endl << "Is full." << endl;
+  if (is_full()){
+    resize();
   }
+  if (is_empty() == false){
+      this->back = next(this->back);
+  } else {
+      this->front = this->back = 0;
+  }
+  this->array[this->back] = data;
 }
 
 template <class T>
-void CircularArray<T>::insert(T data, int pos){ //tratandolo como un insert que reemplaza un valor. no uno que shiftea todo a la derecha y luego reemplaza.
+void CircularArray<T>::insert(T data, int pos){
+  /*
   this->array[(pos % size()) + this->front] = data;
-
+  */
+  if (is_full()){
+    resize();
+  }
+  if (is_empty() == false){
+    int i = next(this->back);
+    this->back = next(this->back);
+    while (i != ((pos % size()) + this->front)){
+      this->array[i] = this->array[prev(i)];
+      cout << endl << this->array[i] <<endl;
+      i = prev(i);
+    }
+    this->array[((pos % size()) + this->front)] = data;
+  }
 }
 
 template <class T>
