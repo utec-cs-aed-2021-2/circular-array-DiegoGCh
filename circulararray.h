@@ -1,3 +1,6 @@
+#ifndef CIRCULARARR_H
+#define CIRCULARARR_H
+
 #include <iostream>
 using namespace std;
 
@@ -153,7 +156,7 @@ T CircularArray<T>::pop_back(){
     }
   } else {
     cout << endl << "Is empty." << endl;
-    return 0; //que retorna si es empty??
+    return 0; //que retorna si es empty?
   }
 }
 
@@ -261,3 +264,5 @@ void CircularArray<T>::reverse(){
     swap(this->array[bajo], this->array[alto]);
   }
 }
+
+#endif
