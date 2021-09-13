@@ -34,6 +34,8 @@ class CircularArray
         void reverse();
         string to_string(string sep=" ");
 
+        
+
     private:
         int next(int);
         int prev(int);
