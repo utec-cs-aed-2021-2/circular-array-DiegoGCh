@@ -1,3 +1,6 @@
+#ifndef CIRCULARARR_H
+#define CIRCULARARR_H
+
 #include <iostream>
 using namespace std;
 
@@ -153,7 +156,7 @@ T CircularArray<T>::pop_back(){
     }
   } else {
     cout << endl << "Is empty." << endl;
-    return 0; //que retorna si es empty??
+    return 0; //que retorna si es empty?
   }
 }
 
@@ -186,7 +189,7 @@ void CircularArray<T>::push_back(T data){
 }
 
 template <class T>
-void CircularArray<T>::insert(T data, int pos){
+void CircularArray<T>::insert(T data, int pos){ //tratandolo como un insert que reemplaza un valor. no uno que shiftea todo a la derecha y luego reemplaza.
   this->array[(pos % size()) + this->front] = data;
 
 }
@@ -216,7 +219,7 @@ void CircularArray<T>::heapify(int* arr, int size, int i){
 
 
 template <class T>
-void CircularArray<T>::sort(){
+void CircularArray<T>::sort(){ //para que funcione bien tuve que poner los front y back en los indices 0 y size()-1, respectivamente
   this->back = size()-1;
   this->front = 0;
 
@@ -261,3 +264,5 @@ void CircularArray<T>::reverse(){
     swap(this->array[bajo], this->array[alto]);
   }
 }
+
+#endif
