@@ -25,4 +25,5 @@ class StackArray: public CircularArray<T> {
           return this->to_string();
         };
 };
+
 #endif
